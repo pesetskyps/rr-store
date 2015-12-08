@@ -1,0 +1,22 @@
+#!/bin/sh
+rr_repo=".\.git\rr-cache"
+commit_hash=`git log -1 --pretty=%H --branches integration`
+commit_repo=`git remote -v | grep '.*(push)$' | awk '{ print $2 }' | sed -e "s/^.*\///" -e "s/.git//"`
+commit_string="rerere cache of commit $commit_hash of integration branch of repository $commit_repo"
+
+git -C $rr_repo add .
+if git -C $rr_repo commit -m "$commit_string"
+then 
+	echo "Successfully commited rr-cache"
+else 
+	echo "Error while commit"
+	exit 1
+fi
+
+if git -C $rr_repo push origin master
+then
+	echo "Successfully pushed rr-cache"
+else
+	echo "Error while pushing"
+	exit 1
+fi

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo "Pulling rr-cache"
+if git -C "./.git/rr-cache" pull origin master
+then echo "Successfully pulled"
+else echo "Couldn't pull. Something went wrong..."
+fi
