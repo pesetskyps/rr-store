@@ -1,19 +1,22 @@
 #!/bin/sh
-rr_repo=".\.git\rr-cache"
+root_dir=`git rev-parse --show-toplevel`
+link="$root_dir/.git/rr-cache"
+link_resolver=`ls -l $link | awk '{ print $11 }' `
+rr_repo_root_dir=`dirname $link_resolver`
+
 commit_hash=`git log -1 --pretty=%H --branches integration`
 commit_repo=`git remote -v | grep '.*(push)$' | awk '{ print $2 }' | sed -e "s/^.*\///" -e "s/.git//"`
 commit_string="rerere cache of commit $commit_hash of integration branch of repository $commit_repo"
 
-git -C $rr_repo add .
-if git -C $rr_repo commit -m "$commit_string"
+git -C $rr_repo_root_dir add .
+if git -C $rr_repo_root_dir commit -m "$commit_string"
 then 
 	echo "Successfully commited rr-cache"
 else 
 	echo "Error while commit"
 	exit 1
 fi
-
-if git -C $rr_repo push origin master
+if git -C $rr_repo_root_dir push origin master
 then
 	echo "Successfully pushed rr-cache"
 else
