@@ -3,7 +3,7 @@ commit_hash=`git log -1 --pretty=%H --branches integration`
 commit_repo=`git remote -v | grep '.*(push)$' | awk '{ print $2 }' | sed -e "s/^.*\///" -e "s/.git//"`
 commit_message="rerere cache of commit $commit_hash to integration branch of repository $commit_repo"
 
-exec powershell -NoProfile -ExecutionPolicy Bypass -Command ".git\hooks\post-commit.ps1 -CommitMessage $commit_message"
+exec powershell -NoProfile -ExecutionPolicy Bypass -Command ".git\hooks\pre-push.ps1 -CommitMessage $commit_message"
 
 #root_dir=`git rev-parse --show-toplevel`
 #link="$root_dir/.git/rr-cache"
