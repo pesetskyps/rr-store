@@ -1,7 +1,9 @@
 #!/bin/sh
-powershell="c:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -command post-commit.ps1"
+commit_hash=`git log -1 --pretty=%H --branches integration`
+commit_repo=`git remote -v | grep '.*(push)$' | awk '{ print $2 }' | sed -e "s/^.*\///" -e "s/.git//"`
+commit_message="rerere cache of commit $commit_hash to integration branch of repository $commit_repo"
 
-exec $powershell
+exec powershell -NoProfile -ExecutionPolicy Bypass -Command ".git\hooks\post-commit.ps1 -CommitMessage $commit_message"
 
 #root_dir=`git rev-parse --show-toplevel`
 #link="$root_dir/.git/rr-cache"
@@ -10,10 +12,10 @@ exec $powershell
 #
 #commit_hash=`git log -1 --pretty=%H --branches integration`
 #commit_repo=`git remote -v | grep '.*(push)$' | awk '{ print $2 }' | sed -e "s/^.*\///" -e "s/.git//"`
-#commit_string="rerere cache of commit $commit_hash of integration branch of repository $commit_repo"
+#commit_message="rerere cache of commit $commit_hash of integration branch of repository $commit_repo"
 #
 #git -C $rr_repo_root_dir add .
-#if git -C $rr_repo_root_dir commit -m "$commit_string"
+#if git -C $rr_repo_root_dir commit -m "$commit_message"
 #then 
 #	echo "Successfully commited rr-cache"
 #else 
