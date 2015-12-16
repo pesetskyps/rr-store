@@ -1,13 +1,2 @@
 #!/bin/sh
-
-echo "Pulling rr-cache"
-
-root_dir=`git rev-parse --show-toplevel`
-link="$root_dir/.git/rr-cache"
-link_resolver=`cd $link; pwd -P `
-rr_repo_root_dir=`dirname $link_resolver`
-
-if git -C $rr_repo_root_dir pull origin master
-then echo "Successfully pulled"
-else echo "Couldn't pull. Something went wrong..."
-fi
+exec powershell -NoProfile -ExecutionPolicy Bypass -Command ".git\hooks\post-merge.ps1"
