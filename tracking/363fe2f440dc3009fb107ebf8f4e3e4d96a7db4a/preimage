@@ -1,0 +1,86 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Web;
+using System.Web.Mvc;
+
+namespace ClaimKatana.Controllers
+{
+    public class HomeController : Controller
+    {
+<<<<<<<
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+          ViewBag.Message = "Your contact page.";
+
+          return View();
+        }
+      
+        public ActionResult About(int id)
+        {
+          int count;
+            ViewBag.Message = "Your application description page.";
+          if (id == 0)
+          {
+            count = 1;
+          }
+            return View((User as ClaimsPrincipal).Claims);
+        }
+
+        public ActionResult GetPicture(int userid)
+        {
+          return View();
+=======
+      public ActionResult Index()
+      {
+          return View();
+      }
+
+      public ActionResult Contact()
+      {
+        ViewBag.Message = "Your contact page.";
+
+        return View();
+      }
+    
+      public ActionResult About(int id)
+      {
+        int count;
+          ViewBag.Message = "Your application description page.";
+        if (id == 0)
+        {
+          count = 1;
+>>>>>>>
+        }
+        return View((User as ClaimsPrincipal).Claims);
+      }
+
+<<<<<<<
+        public ActionResult FollowUp(int userId)
+        {
+            ViewBag.Message = "Your FollowUp page.";
+
+            return View();
+        }
+=======
+      public ActionResult GetPicture(int userid)
+      {
+        return View();
+      }
+
+      public ActionResult FollowUp(int userId)
+      {
+        ViewBag.Message = "Your FollowUp page.";
+
+        return View();
+      }
+
+>>>>>>>
+    }
+}
